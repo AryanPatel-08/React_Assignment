@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form with Validation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+</head>
+<body>
+    <h3>Contact Form</h3>
+
+    <form id="contactForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" >
+        <span class="error" id="nameError"style="color: red;font-size: 0.9em;"></span>
+        <br>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" >
+        <span class="error" id="emailError"style="color: red;font-size: 0.9em;"></span>
+        <br>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#contactForm').on('submit', function(event) {
+                event.preventDefault();
+
+            
+                $('#nameError').text('');
+                $('#emailError').text('');
+
+                var name = $('#name').val();
+                var email = $('#email').val();
+                var isValid = true;
+
+                if (!name) {
+                    $('#nameError').text('Name is required.');
+                    isValid = false;
+                }
+
+                if (!email) {
+                    $('#emailError').text('Email is required.');
+                    isValid = false;
+                } else {
+                    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailPattern.test(email)) {
+                        $('#emailError').text('Please enter a valid email address.');
+                        isValid = false;
+                    }
+                }
+
+                if (isValid) {
+                    alert('Name: ' + name + '\nEmail: ' + email);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
+<!-- -----------------------------------------Q2-------------------------------------------------------- -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State and City Dropdown</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h3>Question 2</h3>
+    <div style="margin-top: 10px;">
+        <label for="state">Select State:</label>
+        <select id="state">
+            <option value="">Select a state</option>
+            <option value="california">California</option>
+            <option value="texas">Texas</option>
+            <option value="newyork">New York</option>
+        </select>
+    </div>
+    
+    <div style="margin-top: 10px;">
+        <label for="city">Select City:</label>
+        <select id="city">
+            <option value="">Select a city</option>
+        </select>
+    </div>
+    <br>
+    <br>
+
+    <script>
+        const cities = {
+            california: ["Los Angeles", "San Francisco", "San Diego"],
+            texas: ["Houston", "Austin", "Dallas"],
+            newyork: ["New York City", "Buffalo", "Albany"]
+        };
+
+        $('#state').change(function() {
+            const selectedState = $(this).val();
+            const citySelect = $('#city');
+            citySelect.empty().append('<option value="">Select a city</option>');
+            
+            if (selectedState) {
+                cities[selectedState].forEach(function(city) {
+                    citySelect.append(`<option value="${city.toLowerCase()}">${city}</option>`);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+<!-- -----------------------------------------Q3-------------------------------------------------------- -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Visibility Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        #toggleDiv {
+            display: none;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Toggle Visibility of a Div</h1>
+    <button id="toggleButton">Show</button>
+    
+    <div id="toggleDiv">
+        This is the content of the div that can be toggled.
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#toggleButton').click(function() {
+                $('#toggleDiv').toggle(); 
+                if ($('#toggleDiv').is(':visible')) {
+                    $(this).text('Hide');
+                } else {
+                    $(this).text('Show');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+<!-- -----------------------------------------Q4-------------------------------------------------------- -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #slider img {
+            width: 300px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <br>
+    -------------------------------------------------------------------------------------------------
+    <h3>Question 4</h3>
+    <div id="slider">
+        <img src="hanuman (2) .jpeg" alt="Image 1">
+        <img src="astron.jpg" alt="Image 2" style="display:none;">
+        <img src="hanuman (3).jpeg" alt="Image 3" style="display:none;">
+    </div>
+    <button id="prev">Previous</button>
+    <button id="next">Next</button>
+    <br>
+    <br>
+    <script>
+        let currentIndex = 0;
+        const images = $('#slider img');
+
+        $('#next').click(function() {
+            images.eq(currentIndex).hide();
+            currentIndex = (currentIndex + 1) % images.length;
+            images.eq(currentIndex).show();
+        });
+
+        $('#prev').click(function() {
+            images.eq(currentIndex).hide();
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            images.eq(currentIndex).show();
+        });
+    </script>
+</body>
+</html>
+
+
+<!-- -----------------------------------------Q5-------------------------------------------------------- -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client-side Validation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    -------------------------------------------------------------------------------------------------
+    <h3>Question 5</h3>
+    <form id="validationForm">
+        <label for="inputField">Text Field:</label>
+        <input type="text" id="inputField" name="inputField"><br><br>
+        <span id="errorMessage" style="color:red; display:none;">This field is required</span><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        $('#validationForm').on('submit', function(event) {
+            const inputField = $('#inputField').val();
+            
+            if (inputField === '') {
+                event.preventDefault();
+                $('#errorMessage').show();
+            } else {
+                $('#errorMessage').hide();
+            }
+        });
+    </script>
+</body>
+</html>
